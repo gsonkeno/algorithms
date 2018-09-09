@@ -186,4 +186,28 @@ public class BST<Key extends Comparable<Key>, Value> {
             return node;
         }
     }
+
+    /**
+     * 返回key的排名
+     * @param key
+     * @return
+     */
+    public int rank(Key key){
+        return rank(key, root);
+    }
+
+    private int rank(Key key, Node x){
+        //返回以x为根节点的子树中小于x.key的键的数量
+        if (x == null) return 0;
+        int cmp = key.compareTo(x.key);
+
+        if (cmp < 0){
+            return rank(key, x.left);
+        }else if ( cmp > 0){
+            return 1 + size(x.left) + rank(key, x.right);
+        }else {
+            //恰好x节点的左子树(不包含x节点自身)的键全部小于参数key
+            return size(x.left);
+        }
+    }
 }

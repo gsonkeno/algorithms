@@ -24,5 +24,14 @@ public class SBTTest {
     @Test
     public void testSelect(){
         System.out.println(bst.select(1));
+        System.out.println(bst.select(2));
+        System.out.println(bst.select(3));
+    }
+
+    @Test
+    public void testRank(){
+        System.out.println(bst.rank("D"));
+        System.out.println(bst.rank("E"));
+        System.out.println(bst.rank("F"));
     }
 }
