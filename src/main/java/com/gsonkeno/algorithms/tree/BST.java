@@ -7,20 +7,24 @@ package com.gsonkeno.algorithms.tree;
  */
 public class BST<Key extends Comparable<Key>, Value> {
 
-    private Node root; //二叉查找树的根节点
+    /**二叉查找树的根节点**/
+    private Node root;
 
     private class Node{
         private Key key;  //键
         private Value value; //值
         private Node left, right; //左右子节点
-        private int N; //以该节点为根的子树节点的个数
+        private int n; //以该节点为根的子树节点的个数
 
         public Node(Key key, Value value, int n) {
             this.key = key;
             this.value = value;
-            N = n;
+            n = n;
         }
+
+
     }
+
 
     /**
      * 获取二叉查找树的节点个数
@@ -31,7 +35,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private int size(Node x){
-        return x.N;
+        return x.n;
     }
 
     /**
@@ -50,12 +54,18 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @return
      */
     private Value get(Node x, Key key){
-        if (x == null) return null;
+        if (x == null) {
+            return null;
+        }
         int compare = key.compareTo(x.key);
 
-        if (compare < 0) return get(x.left,key);
-        else if (compare > 0) return get(x.right,key);
-        else return x.value;
+        if (compare < 0) {
+            return get(x.left,key);
+        } else if (compare > 0) {
+            return get(x.right,key);
+        } else {
+            return x.value;
+        }
     }
 
     /**
@@ -64,7 +74,7 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @param value
      */
     public void put(Key key, Value value){
-
+        put(root, key, value);
     }
 
     /**
@@ -75,15 +85,99 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @param value 操作后的以x为根节点的子树
      */
     private Node put(Node x,Key key, Value value){
-        if (x == null) return new Node(key,value,1);
+        if (x == null) {
+            return new Node(key,value,1);
+        }
         int compare = key.compareTo(x.key);
 
-        if (compare < 0) x.left = put(x.left, key, value);
-        else if (compare > 0) x.right = put(x.right, key, value);
-        else x.value = value;
+        if (compare < 0) {
+            x.left = put(x.left, key, value);
+        } else if (compare > 0) {
+            x.right = put(x.right, key, value);
+        } else {
+            x.value = value;
+        }
 
-        x.N = size(x.left) + size(x.right) + 1;
+        x.n = size(x.left) + size(x.right) + 1;
 
-        return x; //x节点的左右子树可能发生变化
+        //x节点的左右子树可能发生变化
+        return x;
+    }
+
+    /**
+     * 获取二叉树中最小的键
+     * @return
+     */
+    public Key min(){
+        return min(root).key;
+    }
+
+    /**
+     * 获取比x节点的键还小的最小节点
+     * @param x
+     * @return
+     */
+    private Node min(Node x){
+        if (x == null){
+            return null;
+        }
+        return min(x.left);
+    }
+
+    /**
+     * 获取二叉查找树<=key的最大key
+     * @param key
+     * @return
+     */
+    public Key floor(Key key){
+        Node node = floor(root, key);
+        if (node == null){
+            return null;
+        }
+        return node.key;
+    }
+
+    private Node floor(Node x, Key key){
+        if (x == null){
+            return null;
+        }
+        int compare = key.compareTo(x.key);
+        if (compare == 0){
+            return x;
+        }else if (compare < 0){
+            return floor(x.left, key);
+        }else {
+            Node t = floor(x.right, key);
+            if (t == null){
+                return x ;
+            }else {
+                return t;
+            }
+        }
+    }
+
+    /**
+     * 获取排名为k的键(树中有k个小于它的键)
+     * @param k
+     * @return
+     */
+    public Key select(int k){
+        return select(root,k).key;
+    }
+
+    private Node select(Node node, int k){
+        if (node == null){
+            return null;
+        }
+
+        int t = size(node.left);
+        if (t > k){
+            return select(node.left, k);
+        }else if ( t < k){
+            return select(node.right, k - t - 1);
+        }else {
+            //node的左子树(不包含自身节点)恰好拥有k个节点
+            return node;
+        }
     }
 }

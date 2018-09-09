@@ -7,3 +7,7 @@
 下面是我在工作学习过程中，积累下来的基础算法训练。
 
 ---
+## 树
+
+### 二叉查找树
+[BST.java](https://github.com/gsonkeno/algorithms/blob/master/src/main/java/com/gsonkeno/algorithms/tree/BST.java)
