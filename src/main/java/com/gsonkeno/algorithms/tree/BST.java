@@ -19,7 +19,7 @@ public class BST<Key extends Comparable<Key>, Value> {
         public Node(Key key, Value value, int n) {
             this.key = key;
             this.value = value;
-            n = n;
+            this.n = n;
         }
 
 
@@ -35,7 +35,11 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private int size(Node x){
-        return x.n;
+        if (x == null){
+            return 0;
+        }else {
+            return x.n;
+        }
     }
 
     /**
@@ -74,7 +78,7 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @param value
      */
     public void put(Key key, Value value){
-        put(root, key, value);
+        root = put(root, key, value);
     }
 
     /**
@@ -86,6 +90,7 @@ public class BST<Key extends Comparable<Key>, Value> {
      */
     private Node put(Node x,Key key, Value value){
         if (x == null) {
+            System.out.println("键为" + key +"的节点的子树节点个数为1");
             return new Node(key,value,1);
         }
         int compare = key.compareTo(x.key);
@@ -99,6 +104,7 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
 
         x.n = size(x.left) + size(x.right) + 1;
+        System.out.println("键为" + x.key +"的节点的子树节点个数为" + x.n);
 
         //x节点的左右子树可能发生变化
         return x;
