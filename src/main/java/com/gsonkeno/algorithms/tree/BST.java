@@ -7,14 +7,14 @@ package com.gsonkeno.algorithms.tree;
  */
 public class BST<Key extends Comparable<Key>, Value> {
 
-    /**二叉查找树的根节点**/
+    /**二叉查找树的根结点**/
     private Node root;
 
     private class Node{
         private Key key;  //键
         private Value value; //值
-        private Node left, right; //左右子节点
-        private int n; //以该节点为根的子树节点的个数
+        private Node left, right; //左右子结点
+        private int n; //以该结点为根的子树结点的个数
 
         public Node(Key key, Value value, int n) {
             this.key = key;
@@ -27,7 +27,7 @@ public class BST<Key extends Comparable<Key>, Value> {
 
 
     /**
-     * 获取二叉查找树的节点个数
+     * 获取二叉查找树的结点个数
      * @return
      */
     public int size(){
@@ -52,7 +52,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * 以x为根节点的子树中查找并返回key所对应的值
+     * 以x为根结点的子树中查找并返回key所对应的值
      * @param x
      * @param key
      * @return
@@ -73,7 +73,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * 若key存在，更新该节点；否则，创建节点
+     * 若key存在，更新该结点；否则，创建结点
      * @param key
      * @param value
      */
@@ -82,15 +82,15 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * 如果key存在以x为根节点的子树中，则更新它的值
-     * 否则将以key，value为键值对的新节点插入到该子树中
+     * 如果key存在以x为根结点的子树中，则更新它的值
+     * 否则将以key，value为键值对的新结点插入到该子树中
      * @param x
      * @param key
-     * @param value 操作后的以x为根节点的子树
+     * @param value 操作后的以x为根结点的子树
      */
     private Node put(Node x,Key key, Value value){
         if (x == null) {
-            System.out.println("键为" + key +"的节点的子树节点个数为1");
+            System.out.println("键为" + key +"的结点的子树结点个数为1");
             return new Node(key,value,1);
         }
         int compare = key.compareTo(x.key);
@@ -104,9 +104,9 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
 
         x.n = size(x.left) + size(x.right) + 1;
-        System.out.println("键为" + x.key +"的节点的子树节点个数为" + x.n);
+        System.out.println("键为" + x.key +"的结点的子树结点个数为" + x.n);
 
-        //x节点的左右子树可能发生变化
+        //x结点的左右子树可能发生变化
         return x;
     }
 
@@ -119,7 +119,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * 获取比x节点的键还小的最小节点
+     * 获取比x结点的键还小的最小结点
      * @param x
      * @return
      */
@@ -182,7 +182,7 @@ public class BST<Key extends Comparable<Key>, Value> {
         }else if ( t < k){
             return select(node.right, k - t - 1);
         }else {
-            //node的左子树(不包含自身节点)恰好拥有k个节点
+            //node的左子树(不包含自身结点)恰好拥有k个结点
             return node;
         }
     }
@@ -197,7 +197,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private int rank(Key key, Node x){
-        //返回以x为根节点的子树中小于x.key的键的数量
+        //返回以x为根结点的子树中小于x.key的键的数量
         if (x == null) return 0;
         int cmp = key.compareTo(x.key);
 
@@ -206,8 +206,65 @@ public class BST<Key extends Comparable<Key>, Value> {
         }else if ( cmp > 0){
             return 1 + size(x.left) + rank(key, x.right);
         }else {
-            //恰好x节点的左子树(不包含x节点自身)的键全部小于参数key
+            //恰好x结点的左子树(不包含x结点自身)的键全部小于参数key
             return size(x.left);
         }
+    }
+
+    /**
+     * 删除最小键的结点
+     */
+    public void deleteMin(){
+        root = deleteMin(root);
+    }
+
+    /**
+     * 删除比x结点小的最小键结点
+     * @param x
+     * @return 调整后的以x为根结点的子树
+     */
+    private Node deleteMin(Node x){
+        if (x.left == null) return x.right;
+        x.left = deleteMin(x.left);
+        x.n = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    /**
+     * 删除键key
+     * @param key
+     */
+    public void deleteKey(Key key){
+        root = delete(root, key);
+    }
+
+    /**
+     * 删除以x为根结点的子树中的键key
+     * @param x
+     * @param key
+     * @return 调整后的以x结点为根的子树
+     */
+    private Node delete(Node x, Key key){
+        if ( x == null ) return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) {
+            x.left = delete(x.left, key);
+        } else if (cmp > 0) {
+            x.right = delete(x.right, key);
+        } else {
+            if (x.right == null) {
+                return x.left;
+            }else if (x.left == null){
+                return x.right;
+            }
+
+            Node t = x;
+            x = min(t.right);
+            x.right = deleteMin(t.right);
+            x.left = t.left;
+        }
+        x.n = size(x.left) + size(x.right) + 1;
+        return x;
+
     }
 }
