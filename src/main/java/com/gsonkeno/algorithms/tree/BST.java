@@ -2,6 +2,7 @@ package com.gsonkeno.algorithms.tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * 二叉查找树
@@ -342,6 +343,129 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
         if (cmphi > 0 ){
             keys(x.right, queue, lo, hi);
+        }
+    }
+
+    /**
+     * 中序遍历
+     */
+    public  void midOrderTravel(){
+        midOrderTravel(root);
+    }
+
+    private void midOrderTravel(Node x){
+        if (x != null){
+            midOrderTravel(x.left);
+            System.out.println(x.key + ":" + x.value);
+            midOrderTravel(x.right);
+        }
+    }
+    /**
+     * 中序遍历(非递归)
+     */
+    public  void midOrderTravelByStack(){
+        midOrderTravelByStack(root);
+    }
+
+    private  void midOrderTravelByStack(Node x){
+        Stack<Node> stack = new Stack<>();
+        Node node = x;
+
+        while (node != null || stack.size()>0){
+            if (node != null ){
+                stack.push(node);
+                node = node.left;
+            }else {
+                node = stack.pop();
+                System.out.println(node.key + ":" + node.value);
+                node = node.right;
+            }
+        }
+    }
+
+    /**
+     * 先序遍历(递归)
+     */
+    public  void preOrderTravel(){
+        preOrderTravel(root);
+    }
+
+    private   void preOrderTravel(Node x){
+        if (x != null){
+            System.out.println(x.key + ":" + x.value);
+            preOrderTravel(x.left);
+            preOrderTravel(x.right);
+        }
+    }
+
+
+
+    public  void preOrderTravelByStack(){
+        preOrderTravelByStack(root);
+    }
+    /**
+     * 先序遍历(非递归，使用栈)
+     * @param x
+     */
+    private   void preOrderTravelByStack(Node x){
+        Stack<Node> stack = new Stack<>();
+        Node node = x;
+
+        while (node != null || stack.size() >0){
+            if (node != null){
+                System.out.println(node.key + ":" + node.value);
+                stack.push(node); //可以想象是第一次执行时，根节点先打印，再入站
+                node = node.left; //node指向根的左节点
+            }else{
+                //如果根的左节点为空，则获取根的右节点，但是根现在在哪里呢？其实在栈顶
+                node = stack.pop(); //node指向根
+                node = node.right; //node指向根的右节点
+            }
+        }
+    }
+
+    /**
+     * 后序遍历
+     */
+    public void  posOrderTravel(){
+        posOrderTravel(root);
+    }
+    private  void posOrderTravel(Node x){
+        if (x != null){
+            posOrderTravel(x.left);
+            posOrderTravel(x.right);
+            System.out.println(x.key + ":" + x.value );
+        }
+    }
+
+    /**
+     * 后序遍历(非递归)
+     */
+    public  void posOrderTravelByStack(){
+        posOrderTravelByStack(root);
+    }
+    /**
+     * 后序遍历(非递归)
+     * @param x
+     */
+    private   void posOrderTravelByStack(Node x){
+        Stack<Node> stack = new Stack<>();
+        Stack<Node> temp = new Stack<>();
+        Node node = x;
+        while (node != null || stack.size()>0){
+            if (node != null){
+                stack.push(node);
+                temp.push(node);
+                node = node.right;
+            }else {
+                node = stack.pop();
+                node = node.left;
+            }
+        }
+
+        while (temp.size()>0){
+            Node popNode = temp.pop();
+            System.out.println(popNode.key + ":" + popNode.value);
         }
     }
 }

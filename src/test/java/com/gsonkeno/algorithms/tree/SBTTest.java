@@ -40,4 +40,40 @@ public class SBTTest {
     public void testKeys(){
         System.out.println(bst.keys());
     }
+
+    @Test
+    /** 中序遍历**/
+    public void testMidOrderTravel(){
+        bst.midOrderTravel();
+    }
+
+    @Test
+    /** 中序遍历(非递归)**/
+    public void testMidOrderTravelByStack(){
+        bst.midOrderTravelByStack();
+    }
+
+    @Test
+    /**测试先序遍历**/
+    public void testPreOrderTravel(){
+        bst.preOrderTravel();
+    }
+
+    @Test
+    /**测试先序遍历(非递归，利用栈)**/
+    public void testPreOrderTravelByStack(){
+        bst.preOrderTravelByStack();
+    }
+
+    @Test
+    /**测试后序遍历(递归)**/
+    public void testPosOrderTravel(){
+        bst.posOrderTravel();
+    }
+
+    @Test
+    /**测试后序遍历(非递归)**/
+    public void testPosOrderTravelByStack(){
+        bst.posOrderTravelByStack();
+    }
 }
