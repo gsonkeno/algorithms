@@ -34,4 +34,10 @@ public class SBTTest {
         System.out.println(bst.rank("E"));
         System.out.println(bst.rank("F"));
     }
+
+    @Test
+    /**二叉查找树的键范围查找**/
+    public void testKeys(){
+        System.out.println(bst.keys());
+    }
 }

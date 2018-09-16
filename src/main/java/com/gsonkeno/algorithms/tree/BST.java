@@ -1,5 +1,8 @@
 package com.gsonkeno.algorithms.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 二叉查找树
  * @author gaosong
@@ -49,6 +52,29 @@ public class BST<Key extends Comparable<Key>, Value> {
      */
     public Value get(Key key){
         return get(root,key);
+    }
+
+    /**
+     * 查找二叉树中key所对应的值(非递归方式)
+     * @param key
+     * @return
+     */
+    public Value get1(Key key){
+        if ( root == null) return null;
+        Node x = root;
+
+        while ( x != null){
+            int cmp = key.compareTo(x.key);
+
+            if (cmp == 0){
+                return x.value;
+            }else if (cmp <0 ){
+                x = x.left;
+            }else {
+                x = x.right;
+            }
+        }
+        return null;
     }
 
     /**
@@ -124,10 +150,31 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @return
      */
     private Node min(Node x){
-        if (x == null){
-            return null;
+        if (x.left== null){
+            return x;
         }
         return min(x.left);
+    }
+
+
+    /**
+     * 获取二叉树中最大的键
+     * @return
+     */
+    public Key max(){
+        return max(root).key;
+    }
+
+    /**
+     * 获取比x结点的键还大的最大结点
+     * @param x
+     * @return
+     */
+    private Node max(Node x){
+        if (x.right == null){
+            return x;
+        }
+        return max(x.right);
     }
 
     /**
@@ -266,5 +313,35 @@ public class BST<Key extends Comparable<Key>, Value> {
         x.n = size(x.left) + size(x.right) + 1;
         return x;
 
+    }
+
+    /**
+     * 二叉查找树的键范围查找
+     * @return
+     */
+    public Iterable<Key> keys(){
+        return keys(min(), max());
+    }
+
+    public Iterable<Key> keys(Key lo, Key hi){
+        Queue<Key> queue = new LinkedList<>();
+        keys(root, queue, lo, hi);
+        return queue;
+    }
+
+    private void keys(Node x, Queue<Key> queue, Key lo, Key hi){
+        if ( x == null) return;
+        int cmplo = lo.compareTo(x.key);
+        int cmphi = hi.compareTo(x.key);
+
+        if (cmplo < 0){
+            keys(x.left, queue, lo, hi);
+        }
+        if (cmplo <= 0 && cmphi >= 0){
+            queue.add(x.key);
+        }
+        if (cmphi > 0 ){
+            keys(x.right, queue, lo, hi);
+        }
     }
 }
