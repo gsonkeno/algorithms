@@ -468,4 +468,56 @@ public class BST<Key extends Comparable<Key>, Value> {
             System.out.println(popNode.key + ":" + popNode.value);
         }
     }
+
+    public int getDepth(){
+        return getDepth(root);
+    }
+
+    /**
+     * 获取以x为根结点的子树的深度
+     * @param x
+     * @return
+     */
+    private  int getDepth(Node x){
+        if (x == null) return 0;
+
+        int left = getDepth(x.left);
+        int right = getDepth(x.right);
+        return Math.max(left,right) + 1;
+    }
+
+
+    /**
+     * 获取树的宽度
+     * @return
+     */
+    public int getWidth(){
+        return getWidth(root);
+    }
+
+    /**
+     * 获取以x为根结点的树的宽度,层序遍历，遍历一层后，下一层入队列，同时该层元素全部出队列，比较每层元素的数量
+     * @param x
+     * @return
+     */
+    private   int getWidth(Node x){
+        if (x == null) return 0;
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(x);
+        int width = 1;
+        while (true){
+            int lineSize = queue.size();
+
+            if (lineSize == 0 ) break;
+            while (lineSize>0){
+                Node node = queue.poll();
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null)queue.add(node.right);
+                lineSize --;
+            }
+
+            width = Math.max(width,queue.size());
+        }
+        return width;
+    }
 }

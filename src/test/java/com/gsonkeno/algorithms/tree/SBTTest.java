@@ -76,4 +76,16 @@ public class SBTTest {
     public void testPosOrderTravelByStack(){
         bst.posOrderTravelByStack();
     }
+
+    @Test
+    /**测试获取树的深度**/
+    public void testGetDepth(){
+        System.out.println(bst.getDepth());
+    }
+
+    @Test
+    /**测试获取树的宽度**/
+    public void testGetWidth(){
+        System.out.println(bst.getWidth());
+    }
 }
