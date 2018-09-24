@@ -6,6 +6,8 @@ import java.util.Stack;
 
 /**
  * 二叉查找树
+ * <a href="https://www.cnblogs.com/yaobolove/p/6213936.html">二叉树遍历博客</a>
+ * <a href="https://algs4.cs.princeton.edu/home/">算法第四版</a>
  * @author gaosong
  * @since 2018-09-08
  */
