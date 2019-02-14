@@ -7,6 +7,11 @@
 下面是我在工作学习过程中，积累下来的基础算法训练。
 
 ---
+## 排序
+
+### 冒泡排序
+[BubbleSort.java](https://github.com/gsonkeno/algorithms/blob/master/src/main/java/com/gsonkeno/algorithms/sort/BubbleSort.java)
+
 ## 树
 
 ### 二叉查找树
