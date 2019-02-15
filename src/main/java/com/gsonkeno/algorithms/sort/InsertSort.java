@@ -6,6 +6,8 @@ package com.gsonkeno.algorithms.sort;
  * 在已排序区间中找到合适的插入位置将其插入，并保证已排序区间数据一直有序。
  *
  * 重复这个过程，直到未排序区间中元素为空，算法结束。</p>
+ *
+ * 时间复杂度O(n^2)   空间复杂度O(1)  稳定排序
  * @author gaosong
  * @since 2019/2/15
  */
