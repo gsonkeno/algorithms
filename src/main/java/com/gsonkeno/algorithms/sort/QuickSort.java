@@ -86,6 +86,7 @@ public class QuickSort {
         int left = start, right = end;
         // key point 1: pivot is the value, not the index
         int pivot = A[(start + end) / 2];
+        System.out.println("pivot=" + pivot);
 
         // key point 2: every time you compare left & right, it should be
         // left <= right not left < right
@@ -97,13 +98,21 @@ public class QuickSort {
                 right--;
             }
             if (left <= right) {
+                System.out.println( A[left] + "与" + A[right] + "交换");
                 int temp = A[left];
                 A[left] = A[right];
                 A[right] = temp;
 
                 left++;
                 right--;
+
+                for (int i = 0; i < A.length; ++i) {
+                    System.out.print(A[i] + "　");
+                }
+                System.out.println();
             }
+
+
         }
 
         quickSort(A, start, right);
