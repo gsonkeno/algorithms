@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
  * @author gaosong
  * @since 2019-03-01
  * https://blog.csdn.net/whdAlive/article/details/80467493
+ * 优先队列(最小堆)
  */
 public class MergeKList {
     static class ListNode {
@@ -21,6 +22,7 @@ public class MergeKList {
 
     public static ListNode mergeKLists(ListNode[] lists) {
         PriorityQueue<ListNode> queue = new PriorityQueue<>((a, b)->a.val-b.val);
+        //优先队列先把各个链表的首节点放进去
         for(int i=0;i<lists.length;i++){
             if(lists[i]!=null){
                 queue.add(lists[i]);
@@ -29,6 +31,8 @@ public class MergeKList {
         if(queue.isEmpty()){
             return null;
         }
+
+
         ListNode temp = new ListNode(queue.peek().val);
         ListNode head = temp;
         while(!queue.isEmpty()){

@@ -29,13 +29,13 @@ public class ReverseLinkList {
         //当前节点指针
         ListNode currNode = head;
         //下一个节点指针
-        ListNode nextNode = null;
+        ListNode nextNode;
 
         while (currNode != null) {
-            nextNode = currNode.next; //原链表的下一个节点
-            currNode.next = preNode; //将当前节点next域指向前一个节点
-            preNode = currNode; //preNode 指针向后移动
-            currNode = nextNode; //curNode指针向后移动
+            nextNode = currNode.next; //原链表的下一个节点,先找出来，作为临时变量，因为下一步就找不到该节点了
+            currNode.next = preNode; //将当前节点next域指向前一个节点，所以上一步要将原链的节点先找到
+            preNode = currNode; //preNode 指针向后移动，已倒序排好的链表的首节点preNode就有了
+            currNode = nextNode; //curNode指针向后移动，再对原链表的下一个节点做while循环中的逻辑操作
         }
 
         return preNode;
