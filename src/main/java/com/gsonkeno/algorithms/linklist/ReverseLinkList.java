@@ -10,7 +10,7 @@ package com.gsonkeno.algorithms.linklist;
  * @since 2019-03-01
  */
 public class ReverseLinkList {
-    class ListNode {
+    static class ListNode {
         int val;
         ListNode next;
 
