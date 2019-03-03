@@ -114,7 +114,7 @@ public class QuickSort {
 
 
         }
-
+        System.out.println("start=" + start + ",right=" + right + ",left=" + left + ",end=" + end);
         quickSort(A, start, right);
         quickSort(A, left, end);
     }
